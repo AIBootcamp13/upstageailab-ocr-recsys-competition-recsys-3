@@ -1,0 +1,50 @@
+# LightGCN configuration tuned for collaborative filtering ensemble
+data_path : '../data/processed'
+data_save_path: './data'
+USER_ID_FIELD: user_idx
+ITEM_ID_FIELD: item_idx
+TIME_FIELD: event_time
+enable_amp: False
+enable_scaler: False
+worker: 12
+
+user_inter_num_interval: "[3,Inf)"
+item_inter_num_interval: "[3,Inf)"
+
+load_col:
+  inter: ['user_idx', 'item_idx', 'event_time']
+
+# LightGCN architecture
+embedding_size: 128
+n_layers: 3
+reg_weight: 1e-05
+
+# Training setup
+epochs: 50
+train_batch_size: 8192
+learner: adam
+learning_rate: 0.001
+weight_decay: 0.0
+neg_sampling:
+  uniform: 1
+loss_type: BPR
+
+stopping_step: 15
+eval_step: 1
+
+metrics: ['Recall', 'NDCG']
+topk: 10
+valid_metric: NDCG@10
+
+show_progress: True
+checkpoint_dir: './check_point'
+eval_batch_size: 16384
+
+# Evaluation
+eval_args:
+  split:
+    LS:
+      valid_and_test
+  group_by: user
+  order: TO
+  mode: full

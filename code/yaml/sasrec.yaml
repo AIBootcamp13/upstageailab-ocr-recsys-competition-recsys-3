@@ -1,0 +1,59 @@
+# Best-performing SASRec configuration (Oct 08 01:31 run)
+data_path : '../data/processed'
+data_save_path: './data'
+USER_ID_FIELD: user_idx
+ITEM_ID_FIELD: item_idx
+TIME_FIELD: event_time
+enable_amp: False
+enable_scaler: False
+worker: 0
+
+user_inter_num_interval: "[3,Inf)"
+item_inter_num_interval: "[3,Inf)"
+
+load_col:
+  inter: ['user_idx', 'item_idx', 'event_time']
+
+n_layers: 3
+n_heads: 2
+hidden_size: 128
+inner_size: 512
+attribute_hidden_size: [128]
+hidden_dropout_prob: 0.2
+attn_dropout_prob: 0.2
+hidden_act: 'gelu'
+layer_norm_eps: 1e-12
+initializer_range: 0.02
+
+learning_rate: 0.0005
+
+clip_grad_norm:
+  max_norm: 5
+  norm_type: 2
+weight_decay: 1e-05
+pooling_mode: 'sum'
+loss_type: CE
+train_neg_sample_args: null
+eval_neg_sample_args: null
+fusion_type: gate
+lamdas: [10]
+attribute_predictor: linear
+train_batch_size : 2048
+eval_batch_size : 4096
+epochs : 80
+eval_step: 1
+stopping_step : 10
+
+MAX_ITEM_LIST_LENGTH: 150
+eval_args: 
+  split: 
+    LS: 
+      valid_and_test
+  group_by: user 
+  order: TO 
+  mode: full 
+    
+metrics : ['Recall','NDCG']
+topk: 10
+valid_metric: NDCG@10
+checkpoint_dir: './check_point'

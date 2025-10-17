@@ -1,0 +1,60 @@
+# BERT4Rec configuration capturing bidirectional sequential patterns
+data_path : '../data/processed'
+data_save_path: './data'
+USER_ID_FIELD: user_idx
+ITEM_ID_FIELD: item_idx
+TIME_FIELD: event_time
+enable_amp: True
+enable_scaler: True
+worker: 12
+
+user_inter_num_interval: "[3,Inf)"
+item_inter_num_interval: "[3,Inf)"
+
+load_col:
+  inter: ['user_idx', 'item_idx', 'event_time']
+
+n_layers: 2
+n_heads: 4
+hidden_size: 256
+inner_size: 1024
+hidden_dropout_prob: 0.1
+attn_dropout_prob: 0.1
+hidden_act: 'gelu'
+layer_norm_eps: 1e-12
+initializer_range: 0.02
+mask_ratio: 0.2
+mask_prob: 0.9
+replace_prob: 0.05
+
+learning_rate: 0.0005
+
+clip_grad_norm:
+  max_norm: 5
+  norm_type: 2
+weight_decay: 0.0
+loss_type: CE
+train_neg_sample_args: null
+
+train_batch_size : 1280
+eval_batch_size : 1280
+epochs : 10
+eval_step: 2
+stopping_step : 5
+
+MAX_ITEM_LIST_LENGTH: 140
+
+metrics : ['Recall','NDCG']
+topk: 10
+valid_metric: NDCG@10
+checkpoint_dir: './check_point'
+
+show_progress: True
+
+eval_args: 
+  split: 
+    LS: 
+      valid_and_test
+  group_by: user 
+  order: TO 
+  mode: full 

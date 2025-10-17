@@ -1,0 +1,58 @@
+# GRU4Rec configuration focusing on short-term sequential patterns
+data_path : '../data/processed'
+data_save_path: './data'
+USER_ID_FIELD: user_idx
+ITEM_ID_FIELD: item_idx
+TIME_FIELD: event_time
+enable_amp: True
+enable_scaler: False
+worker: 12
+
+user_inter_num_interval: "[3,Inf)"
+item_inter_num_interval: "[3,Inf)"
+
+load_col:
+  inter: ['user_idx', 'item_idx', 'event_time']
+
+# Model hyperparameters
+hidden_size: 256
+num_layers: 1
+dropout_prob: 0.3
+initializer_range: 0.02
+
+# Training setup
+neg_sampling:
+  uniform: 1
+
+epochs: 60
+train_batch_size: 12288
+learner: adam
+learning_rate: 0.001
+weight_decay: 1e-05
+clip_grad_norm:
+  max_norm: 5
+  norm_type: 2
+loss_type: BPR
+train_neg_sample_args:
+  uniform: 1
+
+
+stopping_step: 7
+eval_step: 1
+
+MAX_ITEM_LIST_LENGTH: 100
+
+metrics: ['Recall', 'NDCG']
+topk: 10
+valid_metric: NDCG@10
+
+show_progress: True
+checkpoint_dir: './check_point'
+
+eval_args:
+  split:
+    LS:
+      valid_and_test
+  group_by: user
+  order: TO
+  mode: full
