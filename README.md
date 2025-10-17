@@ -129,19 +129,9 @@ python code/ensemble_rrf_quick.py \
 
 ### Leader Board
 
-- _Insert Leader Board Capture_
-- _Write rank and score_
+- NDCG@10 : 0.1154 (Rank 1)
 
 ### Presentation
 
-- _Insert your presentaion file(pdf) link_
+- [발표자료_](https://docs.google.com/presentation/d/1wsUXjvP5cjk1BDtX93XkvK36gyHheJy5/edit?slide=id.p1#slide=id.p1)
 
-## etc
-
-### Meeting Log
-
-- _Insert your meeting log link like Notion or Google Docs_
-
-### Reference
-
-- _Insert related reference_
